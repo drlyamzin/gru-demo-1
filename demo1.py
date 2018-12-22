@@ -85,3 +85,5 @@ if yn == 'y':
     im = plot_trial[1]
     ani=ani_frame_traintest(np.squeeze(input_test[im,:,:,:]),name='testvideo',sactime_true=np.squeeze(target_test[im,:,:,:]),
                         sactime_test=np.squeeze(prd[im,:,:,:]))
+
+# eof
