@@ -1,8 +1,5 @@
-"Demo 1 git" is an adaptation of Demo 1 (available locally) with pre-cropped .mat data files that do not exceed 100Mb.
+To fit the model, run "python demo1.py"
 
-INSTRUCTIONS
+To examine fitting metrics on train and test sets, run "python error_analysis.py"
 
-- To fit the model, run ""
-
-- To examine fitting metrics on train and test sets, run "python error_analysis.py"
-
+\models_by_epoch contains already fitted models (100 sequential epochs) on which error metrics could be run
