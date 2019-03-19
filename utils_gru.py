@@ -72,7 +72,7 @@ def model_gru(input_shape):
     X = Permute((2,3,1,4))(X)
     
     model = Model(inputs = X_input, outputs = X)
-    
+
     return model  
 
 def stackBlock(X, f, sz, stage, strd = (1,1,1)):

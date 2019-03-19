@@ -14,7 +14,7 @@ from load_and_preprocess import *
 from callbacks import *
 from keras.optimizers import SGD
 import matplotlib.pyplot as plt
-
+from keras.callbacks import TensorBoard
 
 # load data (name of data file is hard-coded)
 tensor, tensor_test, saccades, saccades_test, gcamp, gcamp_test = load_data()
@@ -33,12 +33,15 @@ sgd = SGD(lr=0.001, decay=1e-4, momentum=0.9)
 
 history = LossHistory()
 savewgts = SaveWeights()
+tb = TensorBoard(log_dir='./graph', histogram_freq=1, write_graph=True)
+pr = SavePredictions(input_data)
 gru_model_cmp = model_gru(input_shape = (h, w, T, 1))
 gru_model_cmp.compile(optimizer=sgd,
               loss='binary_crossentropy')
 gru_model_cmp.fit(input_data, target_data, validation_data=(input_test,target_test), 
-                  batch_size=20, epochs=100, verbose=2, callbacks = [history,savewgts])
+                  batch_size=20, epochs=10, verbose=2, callbacks = [history,savewgts,tb,pr])
 
+print(pr.shape)
 
 # todo pack the below in a separate visualization/prediction function
 input("Close figure and press Enter to continue...")

@@ -44,7 +44,7 @@ def ani_frame_traintest(tensor,name='testvideo',sactime_true = None, sactime_tes
 
     nFrames = tensor.shape[2]
     ani = animation.FuncAnimation(fig,update_img,nFrames)
-    writer = matplotlib.animation.FFMpegWriter(fps=20)
+    writer = matplotlib.animation.FFMpegWriter(fps=30)
     
     filename = name+'.mp4'
     ani.save(filename,writer=writer)

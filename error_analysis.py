@@ -141,10 +141,12 @@ def errorByEpoch(input_data,target_data,input_test,target_test,folder_id="models
 
     return out_train_mse, out_test_mse, out_train_xe, out_test_xe, out_train_xe_trials, out_train_se_trials, out_test_xe_trials, out_test_se_trials, out_test_fneg, out_train_fneg, out_test_fpos, out_train_fpos, out_test_tpos, out_train_tpos, out_test_tneg, out_train_tneg, out_weights
 
-def falseneg(prediction,ground_truth):
-    # threshold at 50%
+def falseneg(prediction,ground_truth,threshold=0.5):
+    # simple false negative, all time bins are treated equally as data points
+    
+    # threshold at 50% by default
     ind = ground_truth==1.0
-    fneg = np.sum(prediction[ind]<0.5)/np.sum(ind)
+    fneg = np.sum(prediction[ind]<threshold)/np.sum(ind)
     
     return fneg
 
@@ -166,6 +168,41 @@ def trueneg(prediction,ground_truth):
     # threshold at 50%
     ind = ground_truth==0.0
     tneg = np.sum(prediction[ind]<0.5)/np.sum(ind)
+    
+    return tneg
+
+# TP,FP,TN,FN computed based on the prediction being at least once within the saccade period or outside of it:
+
+def fn_by_period(prediction,ground_truth,threshold=0.5):
+    
+    ind = ground_truth==1.0
+    # if the prediction never exceeds threshold within the saccade period, consider it a FN
+    fneg = (np.sum(prediction[ind]>=threshold))==0
+    
+    return fneg
+
+def fp_by_period(prediction,ground_truth,threshold=0.5):
+    
+    ind = ground_truth==0.0
+    # if the prediction exceeds threshold at least once within the no-saccade period, consider it a FP
+    fpos = (np.sum(prediction[ind]>=threshold))>0
+    
+    return fpos
+
+def tp_by_period(prediction,ground_truth,threshold=0.5):
+    
+    ind = ground_truth==1.0
+    # if the prediction exceeds threshold at least once within the saccade period, consider it a TP
+    tpos = (np.sum(prediction[ind]>=threshold))>0
+    
+    return tpos
+
+
+def tn_by_period(prediction,ground_truth,threshold=0.5):
+    
+    ind = ground_truth==0.0
+    # if the prediction exceeds threshold at least once within the saccade period, consider it a TP
+    tneg = (np.sum(prediction[ind]>=threshold))==0
     
     return tneg
 
