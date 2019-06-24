@@ -13,13 +13,6 @@ In Progress:
 
 1. Make a video using a fitted model from specific epoch, save with specific name
 5. across models: tensorboard will be very useful
-
-
-4. Tensorboard integration: 
-
-several metrics on the same plot: consult this -- https://stackoverflow.com/questions/47877475/keras-tensorboard-plot-train-and-validation-scalars-in-a-same-figure/48393723
-
-save accuracy and/or tp,fp for use in tensorboard
-
+4. (?) Tensorboard integration
 
 
